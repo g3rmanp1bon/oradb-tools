@@ -1,0 +1,5 @@
+grep 'OS Statistics - detail' *.lst | awk '{print $8}'
+
+
+git config --global user.email "german.x.pabon@gmail.com"
+  git config --global user.name "Matut0"
