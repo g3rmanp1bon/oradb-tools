@@ -59,7 +59,8 @@ fs.readdir(directory, function (err, files) {
                 var writeIOPS = data.match(PHYSICAL_WRITE_TOTAL_IO_REGXP)[0].match(REGXP_VALUE)[0].replace(/,/g, '').slice(54, 68).trim();
 
                 var IOPS = parseFloat(readIOPS) + parseFloat(writeIOPS);
-
+                
+                // Getting the server and instance name from the filename
                 server = file.split("_")[0];
                 instance = file.split("_")[1].split(".")[0];
 
