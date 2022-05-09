@@ -3,7 +3,7 @@ var path = require('path');
 data = '';
 
 //Pass as argument the directory to analyze
-// node parser.js "/Users/germanpabon/Documents/customers/confuturo/statspack/Producción"
+// node parser.js "/Users/username/Documents/customers/xxxxx/statspack/prod"
 
 const args = process.argv.slice(2);
 var directory = args[0];
@@ -37,6 +37,8 @@ fs.readdir(directory, function (err, files) {
                 } catch (err) {
                     console.error(err);
                 }
+
+                
 
                 // (physical read total bytes + physical write total bytes)/1024/1024 => IOMB/s
 
@@ -72,6 +74,23 @@ fs.readdir(directory, function (err, files) {
                 }
 
                 console.log(result);
+
+                const { exec } = require("child_process");
+
+                var commando_awk="awk '/OS Statistics - detail/{flag=1;next}/IO Stat by Function/{flag=0}flag' " + filePath + "| awk '{print $5}' | sed 's/[a-z]*[A-Z]*//g' | sed 's/%//g' | sed 's/-//g' | awk NF";
+                console.log("File:"+file);
+                exec(commando_awk, (error, stdout, stderr) => {
+                    if (error) {
+                        console.log(`error: ${error.message}`);
+                        return;
+                    }
+                    if (stderr) {
+                        console.log(`stderr: ${stderr}`);
+                        return;
+                    }                        
+                    console.log(`stdout: ${stdout}`);
+                });
+
             }
 
         });
